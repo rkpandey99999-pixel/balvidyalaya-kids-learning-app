@@ -1,0 +1,8 @@
+{
+  "name": "BalVidyalaya - Kids Learning Adventure",
+  "description": "Interactive learning game for toddlers: English ABC, Hindi Varnamala, 1 to 100 numbers, fruits, animals, balloon popping, and rainbow drawing chalkboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
