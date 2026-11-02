@@ -2,6 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Defensive shim: Ensure window.fetch is writable and configurable with both getter & setter
+      // Prevents "TypeError: Cannot set property fetch of #<Window> which has only a getter" from browser extensions/frame scripts
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          var customFetch = originalFetch ? originalFetch.bind(window) : undefined;
+          Object.defineProperty(window, 'fetch', {
+            configurable: true,
+            enumerable: true,
+            get: function() {
+              return customFetch || originalFetch;
+            },
+            set: function(val) {
+              customFetch = val;
+            }
+          });
+        } catch (e) {
+          // Fallback if property is strictly sealed
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>BalVidyalaya - Kids Learning Adventure</title>
     <meta name="description" content="Interactive learning game for toddlers: English ABC, Hindi Varnamala, 1 to 100 numbers, fruits, animals, balloon popping, and rainbow drawing chalkboard." />

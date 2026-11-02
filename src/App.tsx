@@ -10,18 +10,24 @@ import { BalloonPopGame } from './components/BalloonPopGame';
 import { QuizAdventure } from './components/QuizAdventure';
 import { MagicSlate } from './components/MagicSlate';
 import { MemoryMatchGame } from './components/MemoryMatchGame';
+import { FruitCatcherGame } from './components/FruitCatcherGame';
+import { AnimalFeedingGame } from './components/AnimalFeedingGame';
+import { ToddlerPianoGame } from './components/ToddlerPianoGame';
 import { PauseModal } from './components/PauseModal';
 import { AndroidPublishModal } from './components/AndroidPublishModal';
 import { usePWAInstall } from './utils/usePWAInstall';
 import { sound } from './utils/sound';
 
-type GameMode =
+export type GameMode =
   | 'abc'
   | 'hindi'
   | 'numbers'
   | 'fruits'
   | 'english'
   | 'balloon'
+  | 'catcher'
+  | 'feeding'
+  | 'piano'
   | 'quiz'
   | 'slate'
   | 'memory';
@@ -110,7 +116,13 @@ export default function App() {
       case 'english':
         return { title: 'Colors, Animals & Rhymes', sub: 'English basics for kids', icon: '🎨' };
       case 'balloon':
-        return { title: 'Balloon Pop Game', sub: 'Tap to pop & listen', icon: '🎈' };
+        return { title: 'Balloon Pop Party', sub: 'Tap to pop & listen', icon: '🎈' };
+      case 'catcher':
+        return { title: 'Fruit Basket Catch', sub: 'फल टोकरी में पकड़ो', icon: '🧺' };
+      case 'feeding':
+        return { title: 'Feed Hungry Animals', sub: 'जानवरों को खाना खिलाओ', icon: '🐵' };
+      case 'piano':
+        return { title: 'Toddler Rainbow Piano', sub: 'जादुई पियानो व सुर संगम', icon: '🎹' };
       case 'quiz':
         return { title: 'Find & Tap Quiz', sub: 'Audio question game', icon: '🎯' };
       case 'slate':
@@ -150,39 +162,55 @@ export default function App() {
             onGoHome={handleGoHome}
             onOpenAndroidPublish={() => setIsAndroidModalOpen(true)}
             extraControls={
-              /* Quick module switcher dropdown / tabs */
-              <div className="flex items-center gap-1 bg-amber-100/70 p-1 rounded-2xl border border-amber-200">
-                {(['abc', 'hindi', 'numbers', 'fruits', 'english', 'balloon', 'quiz', 'slate', 'memory'] as const).map(
-                  (m) => {
-                    const icons: Record<GameMode, string> = {
-                      abc: '🔤',
-                      hindi: '🕉️',
-                      numbers: '🔢',
-                      fruits: '🍎',
-                      english: '🎨',
-                      balloon: '🎈',
-                      quiz: '🎯',
-                      slate: '✏️',
-                      memory: '🃏'
-                    };
-                    const isSelected = activeModule === m;
-                    return (
-                      <button
-                        key={m}
-                        onClick={() => {
-                          sound.playTap();
-                          setActiveModule(m);
-                        }}
-                        className={`p-1.5 rounded-xl text-base transition-all ${
-                          isSelected ? 'bg-amber-500 shadow-xs scale-110' : 'hover:bg-amber-200/60'
-                        }`}
-                        title={m.toUpperCase()}
-                      >
-                        {icons[m]}
-                      </button>
-                    );
-                  }
-                )}
+              /* Quick module switcher rail */
+              <div className="flex items-center gap-1 bg-amber-100/70 p-1 rounded-2xl border border-amber-200 overflow-x-auto no-scrollbar max-w-[280px]">
+                {(
+                  [
+                    'abc',
+                    'hindi',
+                    'numbers',
+                    'fruits',
+                    'english',
+                    'balloon',
+                    'catcher',
+                    'feeding',
+                    'piano',
+                    'quiz',
+                    'slate',
+                    'memory'
+                  ] as const
+                ).map((m) => {
+                  const icons: Record<GameMode, string> = {
+                    abc: '🔤',
+                    hindi: '🕉️',
+                    numbers: '🔢',
+                    fruits: '🍎',
+                    english: '🎨',
+                    balloon: '🎈',
+                    catcher: '🧺',
+                    feeding: '🐵',
+                    piano: '🎹',
+                    quiz: '🎯',
+                    slate: '✏️',
+                    memory: '🃏'
+                  };
+                  const isSelected = activeModule === m;
+                  return (
+                    <button
+                      key={m}
+                      onClick={() => {
+                        sound.playTap();
+                        setActiveModule(m);
+                      }}
+                      className={`p-1.5 rounded-xl text-sm sm:text-base transition-all ${
+                        isSelected ? 'bg-amber-500 shadow-xs scale-110' : 'hover:bg-amber-200/60'
+                      }`}
+                      title={m.toUpperCase()}
+                    >
+                      {icons[m]}
+                    </button>
+                  );
+                })}
               </div>
             }
           />
@@ -234,6 +262,27 @@ export default function App() {
               />
             )}
 
+            {activeModule === 'catcher' && (
+              <FruitCatcherGame
+                langMode={langMode}
+                onAddStar={addStar}
+              />
+            )}
+
+            {activeModule === 'feeding' && (
+              <AnimalFeedingGame
+                langMode={langMode}
+                onAddStar={addStar}
+              />
+            )}
+
+            {activeModule === 'piano' && (
+              <ToddlerPianoGame
+                langMode={langMode}
+                onAddStar={addStar}
+              />
+            )}
+
             {activeModule === 'quiz' && (
               <QuizAdventure
                 langMode={langMode}
@@ -258,13 +307,15 @@ export default function App() {
           </main>
 
           {/* Bottom Persistent Activity Dock for Toddlers */}
-          <nav className="w-full bg-white/95 backdrop-blur-md border-t-2 border-amber-200/80 px-2 py-1.5 flex items-center justify-around gap-1 z-30 shrink-0">
+          <nav className="w-full bg-white/95 backdrop-blur-md border-t-2 border-amber-200/80 px-2 py-1.5 flex items-center justify-around gap-1 z-30 shrink-0 overflow-x-auto no-scrollbar">
             {[
               { id: 'abc', label: 'ABC', icon: '🔤' },
               { id: 'hindi', label: 'वर्णमाला', icon: '🕉️' },
               { id: 'numbers', label: '123', icon: '🔢' },
               { id: 'fruits', label: 'Fruits', icon: '🍎' },
-              { id: 'english', label: 'English', icon: '🎨' },
+              { id: 'catcher', label: 'Catch', icon: '🧺' },
+              { id: 'feeding', label: 'Feed', icon: '🐵' },
+              { id: 'piano', label: 'Piano', icon: '🎹' },
               { id: 'balloon', label: 'Balloons', icon: '🎈' },
               { id: 'quiz', label: 'Quiz', icon: '🎯' },
               { id: 'slate', label: 'Slate', icon: '✏️' },
@@ -278,9 +329,9 @@ export default function App() {
                     sound.playTap();
                     setActiveModule(tab.id as GameMode);
                   }}
-                  className={`flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 rounded-xl transition-all active:scale-95 cursor-pointer ${
+                  className={`flex flex-col items-center justify-center py-1 px-1.5 sm:px-2 rounded-xl transition-all active:scale-95 cursor-pointer shrink-0 min-w-[44px] ${
                     isSelected
-                      ? 'bg-amber-500 text-white shadow-xs font-black'
+                      ? 'bg-amber-500 text-white shadow-xs font-black scale-105'
                       : 'text-slate-600 hover:bg-amber-100 font-bold'
                   }`}
                 >

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Play, Sparkles, Volume2, VolumeX, Smartphone, Download } from 'lucide-react';
+import { Play, Sparkles, Volume2, VolumeX, Smartphone } from 'lucide-react';
 import { sound } from '../utils/sound';
 
 interface TitleScreenProps {
@@ -33,7 +33,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
   }, [onStartGame]);
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-between p-4 sm:p-8 select-none overflow-y-auto bg-gradient-to-b from-amber-100 via-orange-50 to-amber-200">
+    <div className="relative w-full h-full flex flex-col items-center justify-between p-3 sm:p-6 select-none overflow-y-auto bg-gradient-to-b from-amber-100 via-orange-50 to-amber-200">
       {/* Background Animated Sky & Playful Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-50 z-0">
         <div className="absolute top-6 left-8 text-5xl sm:text-7xl animate-float">☁️</div>
@@ -88,10 +88,10 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
       </div>
 
       {/* Hero Centerpiece: Bespoke SVG Title Lockup */}
-      <div className="relative z-10 flex flex-col items-center text-center my-auto py-4 max-w-2xl">
+      <div className="relative z-10 flex flex-col items-center text-center my-auto py-2 sm:py-4 max-w-2xl">
         {/* Inline SVG Bespoke Logo Lockup */}
         <div className="relative flex items-center justify-center mb-1">
-          <svg className="w-64 sm:w-80 h-24" viewBox="0 0 320 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg className="w-64 sm:w-80 h-22 sm:h-24" viewBox="0 0 320 90" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#F97316" />
@@ -118,8 +118,8 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
           </svg>
         </div>
 
-        <p className="text-sm sm:text-base font-bold text-amber-900/80 mb-5 max-w-md">
-          Learn ABC, हिंदी वर्णमाला, 1 to 100 counting, delicious fruits & playful games!
+        <p className="text-xs sm:text-base font-bold text-amber-900/80 mb-3 sm:mb-4 max-w-md">
+          Learn ABC, हिंदी वर्णमाला, 1 to 100 counting, delicious fruits & exciting arcade games!
         </p>
 
         {/* Primary Start CTA Button */}
@@ -128,14 +128,14 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
             sound.playSuccess();
             onStartGame('abc');
           }}
-          className="group relative px-8 sm:px-12 py-3.5 sm:py-4 rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white font-black text-xl sm:text-2xl shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 border-3 border-amber-300 cursor-pointer animate-pulse-gentle"
+          className="group relative px-8 sm:px-12 py-3 sm:py-3.5 rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white font-black text-lg sm:text-2xl shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 border-3 border-amber-300 cursor-pointer animate-pulse-gentle"
         >
-          <Play className="w-7 h-7 fill-white group-hover:scale-110 transition-transform" />
+          <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-white group-hover:scale-110 transition-transform" />
           <span>Start Adventure! (शुरू करें)</span>
         </button>
 
-        {/* Interactive Hero Preview Cards (Hover/tap for fun sounds) */}
-        <div className="grid grid-cols-4 gap-2.5 sm:gap-3 mt-6 w-full max-w-md">
+        {/* Interactive Hero Preview Cards */}
+        <div className="grid grid-cols-4 gap-2 sm:gap-3 mt-4 w-full max-w-md">
           {[
             { label: 'A a', sub: 'Apple', emoji: '🍎', color: '#EF4444', mode: 'abc' },
             { label: 'अ क', sub: 'वर्णमाला', emoji: '🕊️', color: '#3B82F6', mode: 'hindi' },
@@ -148,7 +148,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                 sound.playSuccess();
                 onStartGame(item.mode);
               }}
-              className="p-2 sm:p-3 rounded-2xl bg-white/90 hover:bg-white border-2 border-amber-200 hover:border-amber-400 shadow-md flex flex-col items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              className="p-1.5 sm:p-2.5 rounded-2xl bg-white/90 hover:bg-white border-2 border-amber-200 hover:border-amber-400 shadow-md flex flex-col items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer"
             >
               <span className="text-2xl sm:text-3xl mb-0.5">{item.emoji}</span>
               <span className="font-black text-xs sm:text-sm text-slate-800 font-baloo leading-tight">
@@ -162,21 +162,25 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
         </div>
       </div>
 
-      {/* Quick Launchpad to all 8 modules */}
-      <div className="relative z-10 w-full max-w-4xl bg-white/80 backdrop-blur-md p-3 sm:p-4 rounded-3xl border-2 border-amber-200/90 shadow-lg">
+      {/* Quick Launchpad to all 12 modules & games */}
+      <div className="relative z-10 w-full max-w-5xl bg-white/85 backdrop-blur-md p-3 sm:p-4 rounded-3xl border-2 border-amber-200/90 shadow-lg">
         <p className="text-xs font-black text-amber-900/80 mb-2 text-center uppercase tracking-wider">
-          Or Choose What You Want to Learn & Play Today:
+          🎮 Choose Any Game or Learning Activity (खेलें और सीखें):
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
           {[
+            { id: 'catcher', title: 'Fruit Catcher', icon: '🧺', desc: 'फल टोकरी में पकड़ो' },
+            { id: 'feeding', title: 'Feed Animals', icon: '🐵', desc: 'खाना खिलाओ' },
+            { id: 'piano', title: 'Toddler Piano', icon: '🎹', desc: 'जादुई पियानो व सुर' },
+            { id: 'balloon', title: 'Balloon Pop', icon: '🎈', desc: 'गुब्बारे फोड़ो' },
+            { id: 'quiz', title: 'Find & Tap', icon: '🎯', desc: 'पहचानो खेल' },
+            { id: 'memory', title: 'Memory Match', icon: '🃏', desc: 'जोड़ी मिलाओ' },
+            { id: 'slate', title: 'Magic Slate', icon: '✏️', desc: 'जादुई स्लेट' },
+            { id: 'fruits', title: 'Yummy Fruits', icon: '🍉', desc: 'फलों के नाम' },
+            { id: 'numbers', title: '1-100 Numbers', icon: '🔢', desc: 'गिनती और तारे' },
             { id: 'abc', title: 'ABC Alphabet', icon: '🔤', desc: 'Phonics & words' },
             { id: 'hindi', title: 'हिंदी वर्णमाला', icon: '🕉️', desc: 'स्वर व व्यंजन' },
-            { id: 'numbers', title: '1 to 100 Numbers', icon: '🔢', desc: 'गिनती और तारे' },
-            { id: 'fruits', title: 'Yummy Fruits', icon: '🍉', desc: 'फलों के नाम' },
-            { id: 'english', title: 'Colors & Animals', icon: '🎨', desc: 'रंग, जानवर, गीत' },
-            { id: 'balloon', title: 'Balloon Pop Game', icon: '🎈', desc: 'गुब्बारे फोड़ो' },
-            { id: 'quiz', title: 'Find & Tap Quiz', icon: '🎯', desc: 'पहचानो खेल' },
-            { id: 'slate', title: 'Magic Slate', icon: '✏️', desc: 'जादुई स्लेट' }
+            { id: 'english', title: 'Animals & Colors', icon: '🎨', desc: 'रंग, जानवर, गीत' }
           ].map((card) => (
             <button
               key={card.id}
@@ -184,7 +188,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                 sound.playSuccess();
                 onStartGame(card.id);
               }}
-              className="p-2 sm:p-2.5 rounded-2xl bg-amber-50/90 hover:bg-amber-100/90 border border-amber-200 hover:border-amber-400 text-left transition-all active:scale-95 flex items-center gap-2 cursor-pointer shadow-2xs"
+              className="p-2 sm:p-2.5 rounded-2xl bg-amber-50/90 hover:bg-amber-100 border border-amber-200 hover:border-amber-400 text-left transition-all active:scale-95 flex items-center gap-2 cursor-pointer shadow-2xs"
             >
               <span className="text-2xl sm:text-3xl shrink-0">{card.icon}</span>
               <div className="min-w-0">
@@ -201,7 +205,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
       </div>
 
       {/* Flat Control Hint Line required by game guidelines */}
-      <div className="relative z-10 mt-3 text-center text-xs font-bold text-amber-900/70">
+      <div className="relative z-10 mt-2 text-center text-xs font-bold text-amber-900/70">
         <span>Tap / Click to Play · Press Space to Hear Sound · Esc for Menu</span>
       </div>
     </div>
